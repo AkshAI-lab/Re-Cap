@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cost Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #007BFF;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e9f5ff;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .result p {
+      margin: 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: #007BFF;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cost Calculator</h1>
+    <label for="workPortionCost">Work Portion Cost (₹):</label>
+    <input type="number" id="workPortionCost" placeholder="Enter work portion cost">
+
+    <label for="royalty">Royalty (%):</label>
+    <input type="number" id="royalty" value="1">
+
+    <label for="materialTesting">Material Testing Charges (%):</label>
+    <input type="number" id="materialTesting" value="1">
+
+    <label for="gst">GST (%):</label>
+    <input type="number" id="gst" value="18">
+
+    <label for="labourInsurance">Labour Insurance (%):</label>
+    <input type="number" id="labourInsurance" value="0.5">
+
+    <label for="contingency">Contingency (%):</label>
+    <input type="number" id="contingency" value="3">
+
+    <label for="pmcCharges">PMC Charges (%):</label>
+    <input type="number" id="pmcCharges" value="0">
+
+    <label for="escalation">Escalation (%):</label>
+    <input type="number" id="escalation" value="0">
+
+    <button onclick="calculateTotal()">Calculate Total Cost</button>
+
+    <div class="result">
+      <p>Total Cost: ₹<span id="totalCost">0.00</span></p>
+    </div>
+  </div>
+
+  <script>
+    function calculateTotal() {
+      // Get input values
+      const workPortionCost = parseFloat(document.getElementById('workPortionCost').value);
+      const royalty = parseFloat(document.getElementById('royalty').value) / 100;
+      const materialTesting = parseFloat(document.getElementById('materialTesting').value) / 100;
+      const gst = parseFloat(document.getElementById('gst').value) / 100;
+      const labourInsurance = parseFloat(document.getElementById('labourInsurance').value) / 100;
+      const contingency = parseFloat(document.getElementById('contingency').value) / 100;
+      const pmcCharges = parseFloat(document.getElementById('pmcCharges').value) / 100;
+      const escalation = parseFloat(document.getElementById('escalation').value) / 100;
+
+      // Calculate labour insurance based on work portion cost
+      const labourInsuranceRate = workPortionCost <= 2500000 ? 0.005 : 0.01;
+
+      // Calculate total cost
+      const totalCost = workPortionCost * (1 + royalty + materialTesting + gst + labourInsuranceRate + contingency + pmcCharges + escalation);
+
+      // Display the result
+      document.getElementById('totalCost').textContent = totalCost.toFixed(2);
+    }
+  </script>
+</body>
+</html>
